@@ -10,19 +10,13 @@ if [ ! -e "/initialized" ]
 then
     if [ -d "/docker-entrypoint-init.d" ]
     then
-        for f in /docker-entrypoint-init.d/*
-        do
-            case "${f}"
-            in
-                *.sh)
-                    echo "$0: running $f"
-                    nohup "$f" &
-                    ;;
-                *)
-                   echo "$0: ignoring $f"
-                   ;;
-            esac
+        shopt -s nullglob
+        for f in /docker-entrypoint-init.d/*.sh ; do
+            echo "$0: running $f"
+            nohup "$f" &
         done
+
+        shopt -u nullglob
 
     fi
 fi
