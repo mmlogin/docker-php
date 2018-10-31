@@ -3,7 +3,8 @@ set -e
 
 # first arg is `-f` or `--some-option`
 if [ "${1#-}" != "$1" ]; then
-	set -- php-fpm${PHP_VERSION:-7.0} "$@"
+    echo "$0: Setting ARG[1] to: php-fpm${PHP_VERSION:-7.0}"
+    set -- php-fpm${PHP_VERSION:-7.0} "$@"
 fi
 
 if [ ! -e "/initialized" ]
@@ -21,6 +22,6 @@ then
     fi
 fi
 
-echo "Executing $@"
+echo "$0: Executing: $@"
 exec "$@"
 
